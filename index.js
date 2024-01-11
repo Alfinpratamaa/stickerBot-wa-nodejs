@@ -7,7 +7,7 @@ const puppeteer = require("puppeteer");
 async function run() {
   // Launch Puppeteer with specific Chrome path
   const browser = await puppeteer.launch({
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    args: ["--no-sandbox"],
   });
 
   // Close the browser
