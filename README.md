@@ -21,6 +21,6 @@ Jomok Sticker Bot is a WhatsApp bot that allows users to create stickers from im
    ```
 3. run the apps
    ```bash
-  npm start
-  ```
+   npm start
+   ```
   
