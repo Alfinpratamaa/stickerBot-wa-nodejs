@@ -4,6 +4,7 @@
   "description": "StickerBOT by alfin",
   "main": "index.js",
   "scripts": {
+    "heroku-postbuild": "mkdir ./.cache && mv /app/.cache/puppeteer ./.cache",
     "start": "node ."
   },
   "keywords": [

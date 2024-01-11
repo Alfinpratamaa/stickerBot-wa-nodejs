@@ -5,12 +5,8 @@ const colors = require("colors");
 const puppeteer = require("puppeteer");
 
 async function run() {
-  // Set Chrome path based on environment variable
-  const chromePath = "/usr/bin/google-chrome";
-
   // Launch Puppeteer with specific Chrome path
   const browser = await puppeteer.launch({
-    executablePath: chromePath,
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
 
