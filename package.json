@@ -4,8 +4,7 @@
   "description": "StickerBOT by alfin",
   "main": "index.js",
   "scripts": {
-    "start": "node .",
-    "install": "npm install"
+    "start": "node ."
   },
   "keywords": [
     "nodejs",
