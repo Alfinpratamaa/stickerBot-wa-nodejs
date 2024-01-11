@@ -30,7 +30,7 @@ Make sure you have Node.js installed before proceeding. You can download and ins
 ## How to use bot on whatsapp
 
 1. use whatsapp account
-2. go to linked account on the menu
+2. go to linked devices on the menu
 3. scan qr that's showed on terminal
 4. great !! sticker bot has activated on your whatsapp account
 5. now your friend can use command  <span style='font-weight: 800;'>'.sticker'</span>   on capion of pic
