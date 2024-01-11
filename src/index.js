@@ -1,7 +1,8 @@
-const { Client, LocalAuth } = require("whatsapp-web.js");
+const { Client, LocalAuth, MessageMedia } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
 const moment = require("moment-timezone");
 const colors = require("colors");
+const ytdl = require("ytdl-core"); // Add this line to import the ytdl-core package
 
 const client = new Client({
   restartOnAuthFail: true,
@@ -13,7 +14,7 @@ const client = new Client({
       "--unhandled-rejections=strict",
     ],
   },
-  ffmpeg: "./ffmpeg.exe",
+  ffmpeg: "../ffmpeg.exe",
   authStrategy: new LocalAuth({ clientId: "client" }),
 });
 const config = {
@@ -40,10 +41,12 @@ client.on("ready", async () => {
     } is Already!`.green
   );
 });
+
 client.on("message", async (message) => {
   const isGroups = message.from.endsWith("@g.us") ? true : false;
   if ((isGroups && config.groups) || !isGroups) {
     const isStickerCommand = message.body.startsWith(`${config.prefix}sticker`);
+    const isYoutubeCommand = message.body.startsWith(`${config.prefix}youtube`);
 
     const hasMedia = message.hasMedia;
     const hasCaptionStickerCommand =
@@ -84,8 +87,8 @@ client.on("message", async (message) => {
             client
               .sendMessage(message.from, media, {
                 sendMediaAsSticker: true,
-                stickerName: config.name, // Sticker Name = Edit in 'config/config.json'
-                stickerAuthor: config.author, // Sticker Author = Edit in 'config/config.json'
+                stickerName: config.name,
+                stickerAuthor: config.author,
               })
               .then(() => {
                 client.sendMessage(message.from, "*[✅]* nih stickernya tod!");
@@ -106,17 +109,20 @@ client.on("message", async (message) => {
         } catch {
           client.sendMessage(message.from, "*[🔴]* error!");
         }
-
-        // Sticker to Image (With Reply Sticker)
       } else if (message.body == `${config.prefix}image`) {
         const quotedMsg = await message.getQuotedMessage();
         if (message.hasQuotedMsg && quotedMsg.hasMedia) {
           client.sendMessage(message.from, "*[⏳]* bentar..");
           try {
             const media = await quotedMsg.downloadMedia();
-            client.sendMessage(message.from, media).then(() => {
-              client.sendMessage(message.from, "*[✅]* nih stickernya tod!");
-            });
+            client
+              .sendMessage(message.from, media, {
+                caption: "nih gambarnya tod!",
+                sendMediaAsDocument: true,
+              })
+              .then(() => {
+                client.sendMessage(message.from, "*[✅]* nih gambarnya tod!");
+              });
           } catch {
             client.sendMessage(message.from, "*[🔴]* error!");
           }
@@ -131,4 +137,5 @@ client.on("message", async (message) => {
     }
   }
 });
+
 client.initialize();
