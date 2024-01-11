@@ -7,6 +7,9 @@ Jomok Sticker Bot is a WhatsApp bot that allows users to create stickers from im
 - Create stickers from images, videos, and GIFs.
 - Supports both group and private messages.
 - User-friendly sticker creation without user intervention.
+  
+## Prerequisites
+Make sure you have Node.js installed before proceeding. You can download and install Node.js from the official website: [Node.js Official Website](https://nodejs.org/)
 
 ## Installation
 
@@ -24,3 +27,10 @@ Jomok Sticker Bot is a WhatsApp bot that allows users to create stickers from im
    npm start
    ```
   
+## How to use bot on whatsapp
+
+1. use whatsapp account
+2. go to linked account on the menu of main menu
+3. scan qr that show on terminal
+4. greate sticker bot has activated on your whatsapp account
+5. now your friend can use command  <span style='font-weight: bold;'>'.sticker'</span>   on capion of pic
