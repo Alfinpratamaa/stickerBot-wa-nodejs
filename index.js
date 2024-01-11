@@ -2,23 +2,17 @@ const { Client, LocalAuth } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
 const moment = require("moment-timezone");
 const colors = require("colors");
-const puppeteer = require("puppeteer");
 
-async function run() {
-  // Launch Puppeteer with specific Chrome path
-  const browser = await puppeteer.launch({
-    args: ["--no-sandbox"],
-  });
-
-  // Close the browser
-  await browser.close();
-}
-
-// Run the function
-
-run();
 const client = new Client({
   restartOnAuthFail: true,
+  puppeteer: {
+    headless: true,
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--unhandled-rejections=strict",
+    ],
+  },
   ffmpeg: "./ffmpeg.exe",
   authStrategy: new LocalAuth({ clientId: "client" }),
 });
@@ -82,6 +76,58 @@ client.on("message", async (message) => {
           client.sendMessage(message.from, "*[🔴]* error!");
         }
       }
+    } else if (message.body == `${config.prefix}sticker`) {
+      const quotedMsg = await message.getQuotedMessage();
+      if (message.hasQuotedMsg && quotedMsg.hasMedia) {
+        client.sendMessage(message.from, "*[⏳]* Loading..");
+        try {
+          const media = await quotedMsg.downloadMedia();
+          client
+            .sendMessage(message.from, media, {
+              sendMediaAsSticker: true,
+              stickerName: config.name, // Sticker Name = Edit in 'config/config.json'
+              stickerAuthor: config.author, // Sticker Author = Edit in 'config/config.json'
+            })
+            .then(() => {
+              client.sendMessage(message.from, "*[✅]* Successfully!");
+            });
+        } catch {
+          client.sendMessage(message.from, "*[❎]* Failed!");
+        }
+      } else {
+        client.sendMessage(message.from, "*[❎]* Reply Image First!");
+      }
+    } else if (message.type == "sticker") {
+      client.sendMessage(message.from, "*[⏳]* Loading..");
+      try {
+        const media = await message.downloadMedia();
+        client.sendMessage(message.from, media).then(() => {
+          client.sendMessage(message.from, "*[✅]* Successfully!");
+        });
+      } catch {
+        client.sendMessage(message.from, "*[❎]* Failed!");
+      }
+
+      // Sticker to Image (With Reply Sticker)
+    } else if (message.body == `${config.prefix}image`) {
+      const quotedMsg = await message.getQuotedMessage();
+      if (message.hasQuotedMsg && quotedMsg.hasMedia) {
+        client.sendMessage(message.from, "*[⏳]* Loading..");
+        try {
+          const media = await quotedMsg.downloadMedia();
+          client.sendMessage(message.from, media).then(() => {
+            client.sendMessage(message.from, "*[✅]* Successfully!");
+          });
+        } catch {
+          client.sendMessage(message.from, "*[❎]* Failed!");
+        }
+      } else {
+        client.sendMessage(message.from, "*[❎]* Reply Sticker First!");
+      }
+    } else {
+      client.getChatById(message.id.remote).then(async (chat) => {
+        await chat.sendSeen();
+      });
     }
   }
 });
