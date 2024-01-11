@@ -1,11 +1,11 @@
 {
-  "name": "Jomok Sticker Bot",
+  "name": "jomok-sticker-bot",
   "version": "2.0",
   "description": "StickerBOT by alfin",
   "main": "index.js",
   "scripts": {
-    "heroku-postbuild":"mkdir ./.cache && mv /app/.cache/puppeteer ./.cache",
-    "start": "node ."
+    "start": "node .",
+    "heroku-postbuild": "mkdir ./.cache && mv /app/.cache/puppeteer ./.cache"
   },
   "keywords": [
     "nodejs",
