@@ -16,6 +16,7 @@ async function run() {
 
 // Run the function
 
+run();
 const client = new Client({
   restartOnAuthFail: true,
   ffmpeg: "./ffmpeg.exe",
@@ -84,5 +85,4 @@ client.on("message", async (message) => {
     }
   }
 });
-run();
 client.initialize();
