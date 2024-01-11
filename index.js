@@ -75,54 +75,54 @@ client.on("message", async (message) => {
         } catch {
           client.sendMessage(message.from, "*[🔴]* error!");
         }
-      }
-    } else if (message.body == `${config.prefix}sticker`) {
-      const quotedMsg = await message.getQuotedMessage();
-      if (message.hasQuotedMsg && quotedMsg.hasMedia) {
-        client.sendMessage(message.from, "*[⏳]* Loading..");
-        try {
-          const media = await quotedMsg.downloadMedia();
-          client
-            .sendMessage(message.from, media, {
-              sendMediaAsSticker: true,
-              stickerName: config.name, // Sticker Name = Edit in 'config/config.json'
-              stickerAuthor: config.author, // Sticker Author = Edit in 'config/config.json'
-            })
-            .then(() => {
-              client.sendMessage(message.from, "*[✅]* Successfully!");
-            });
-        } catch {
-          client.sendMessage(message.from, "*[❎]* Failed!");
+      } else if (message.body == `${config.prefix}sticker`) {
+        const quotedMsg = await message.getQuotedMessage();
+        if (message.hasQuotedMsg && quotedMsg.hasMedia) {
+          client.sendMessage(message.from, "*[⏳]* bentar..");
+          try {
+            const media = await quotedMsg.downloadMedia();
+            client
+              .sendMessage(message.from, media, {
+                sendMediaAsSticker: true,
+                stickerName: config.name, // Sticker Name = Edit in 'config/config.json'
+                stickerAuthor: config.author, // Sticker Author = Edit in 'config/config.json'
+              })
+              .then(() => {
+                client.sendMessage(message.from, "*[✅]* nih stickernya tod!");
+              });
+          } catch {
+            client.sendMessage(message.from, "*[🔴]* error!");
+          }
+        } else {
+          client.sendMessage(message.from, "*[❎]* Reply Image First!");
         }
-      } else {
-        client.sendMessage(message.from, "*[❎]* Reply Image First!");
-      }
-    } else if (message.type == "sticker") {
-      client.sendMessage(message.from, "*[⏳]* Loading..");
-      try {
-        const media = await message.downloadMedia();
-        client.sendMessage(message.from, media).then(() => {
-          client.sendMessage(message.from, "*[✅]* Successfully!");
-        });
-      } catch {
-        client.sendMessage(message.from, "*[❎]* Failed!");
-      }
-
-      // Sticker to Image (With Reply Sticker)
-    } else if (message.body == `${config.prefix}image`) {
-      const quotedMsg = await message.getQuotedMessage();
-      if (message.hasQuotedMsg && quotedMsg.hasMedia) {
-        client.sendMessage(message.from, "*[⏳]* Loading..");
+      } else if (message.type == "sticker") {
+        client.sendMessage(message.from, "*[⏳]* bentar..");
         try {
-          const media = await quotedMsg.downloadMedia();
+          const media = await message.downloadMedia();
           client.sendMessage(message.from, media).then(() => {
-            client.sendMessage(message.from, "*[✅]* Successfully!");
+            client.sendMessage(message.from, "*[✅]* nih stickernya tod!");
           });
         } catch {
-          client.sendMessage(message.from, "*[❎]* Failed!");
+          client.sendMessage(message.from, "*[🔴]* error!");
         }
-      } else {
-        client.sendMessage(message.from, "*[❎]* Reply Sticker First!");
+
+        // Sticker to Image (With Reply Sticker)
+      } else if (message.body == `${config.prefix}image`) {
+        const quotedMsg = await message.getQuotedMessage();
+        if (message.hasQuotedMsg && quotedMsg.hasMedia) {
+          client.sendMessage(message.from, "*[⏳]* bentar..");
+          try {
+            const media = await quotedMsg.downloadMedia();
+            client.sendMessage(message.from, media).then(() => {
+              client.sendMessage(message.from, "*[✅]* nih stickernya tod!");
+            });
+          } catch {
+            client.sendMessage(message.from, "*[🔴]* error!");
+          }
+        } else {
+          client.sendMessage(message.from, "*[❎]* Reply Sticker First!");
+        }
       }
     } else {
       client.getChatById(message.id.remote).then(async (chat) => {
