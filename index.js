@@ -2,6 +2,23 @@ const { Client, LocalAuth } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
 const moment = require("moment-timezone");
 const colors = require("colors");
+const puppeteer = require("puppeteer");
+
+async function run() {
+  // Set Chrome path based on environment variable
+  const chromePath = "/usr/bin/google-chrome";
+
+  // Launch Puppeteer with specific Chrome path
+  const browser = await puppeteer.launch({
+    executablePath: chromePath,
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
+
+  // Close the browser
+  await browser.close();
+}
+
+// Run the function
 
 const client = new Client({
   restartOnAuthFail: true,
@@ -71,5 +88,5 @@ client.on("message", async (message) => {
     }
   }
 });
-
+run();
 client.initialize();
