@@ -2,15 +2,41 @@ const { Client, LocalAuth } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
 const moment = require("moment-timezone");
 const colors = require("colors");
+const fs = require("fs");
+
+// Find available Chromium executable
+const findChromiumExecutable = () => {
+  const possiblePaths = [
+    "/usr/bin/chromium-browser",
+    "/usr/bin/chromium",
+    "/usr/bin/google-chrome-stable",
+    "/usr/bin/google-chrome",
+    "/snap/bin/chromium",
+  ];
+
+  for (const path of possiblePaths) {
+    if (fs.existsSync(path)) {
+      return path;
+    }
+  }
+
+  // If none found, return undefined to let Puppeteer use its default
+  return undefined;
+};
+
+const chromiumPath = findChromiumExecutable();
+const puppeteerConfig = chromiumPath
+  ? {
+      executablePath: chromiumPath,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    }
+  : { args: ["--no-sandbox", "--disable-setuid-sandbox"] };
 
 const client = new Client({
   restartOnAuthFail: true,
   ffmpeg: "/usr/bin/ffmpeg",
   authStrategy: new LocalAuth({ clientId: "client" }),
-  puppeteer: {
-    executablePath: "/usr/bin/chromium-browser",
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-  },
+  puppeteer: puppeteerConfig,
 });
 const config = {
   name: "jomokStickerBot",

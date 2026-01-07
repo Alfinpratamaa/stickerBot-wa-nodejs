@@ -31,7 +31,7 @@ Make sure you have the following installed before proceeding:
    sudo apt install ./google-chrome-stable_current_amd64.deb
    ```
    
-   If using Google Chrome, update the `executablePath` in `index.js` to `/usr/bin/google-chrome-stable`
+   **Note**: The bot will automatically detect which browser is installed (Chromium or Chrome) and use the appropriate executable path.
 
 ## Installation
 
@@ -43,6 +43,11 @@ Make sure you have the following installed before proceeding:
 2. Install dependencies (skip Puppeteer's Chromium download since we're using system Chromium):
    ```bash
    PUPPETEER_SKIP_DOWNLOAD=true npm i
+   ```
+   
+   **Note**: The `PUPPETEER_SKIP_DOWNLOAD=true` prefix is only needed during the initial `npm install`. You don't need to set it permanently. For subsequent npm installs, you can also add it to your `.npmrc` file:
+   ```bash
+   echo "PUPPETEER_SKIP_DOWNLOAD=true" >> .npmrc
    ```
 3. Run the app:
    ```bash
