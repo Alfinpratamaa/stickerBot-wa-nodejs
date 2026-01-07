@@ -2,11 +2,63 @@ const { Client, LocalAuth } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
 const moment = require("moment-timezone");
 const colors = require("colors");
+const fs = require("fs");
+
+// Find available Chromium executable
+const findChromiumExecutable = () => {
+  const possiblePaths = [
+    "/usr/bin/chromium-browser",
+    "/usr/bin/chromium",
+    "/usr/bin/google-chrome-stable",
+    "/usr/bin/google-chrome",
+    "/snap/bin/chromium",
+  ];
+
+  for (const path of possiblePaths) {
+    if (fs.existsSync(path)) {
+      return path;
+    }
+  }
+
+  // If none found, return undefined to let Puppeteer use its default
+  return undefined;
+};
+
+// Find available FFmpeg executable
+const findFfmpegExecutable = () => {
+  const possiblePaths = [
+    "/usr/bin/ffmpeg",
+    "/usr/local/bin/ffmpeg",
+  ];
+
+  for (const path of possiblePaths) {
+    if (fs.existsSync(path)) {
+      return path;
+    }
+  }
+
+  // Default to system PATH
+  return "ffmpeg";
+};
+
+const chromiumPath = findChromiumExecutable();
+const ffmpegPath = findFfmpegExecutable();
+
+// Puppeteer args for headless operation on Ubuntu
+const puppeteerArgs = ["--no-sandbox", "--disable-setuid-sandbox"];
+
+const puppeteerConfig = chromiumPath
+  ? {
+      executablePath: chromiumPath,
+      args: puppeteerArgs,
+    }
+  : { args: puppeteerArgs };
 
 const client = new Client({
   restartOnAuthFail: true,
-  ffmpeg: "./ffmpeg.exe",
+  ffmpeg: ffmpegPath,
   authStrategy: new LocalAuth({ clientId: "client" }),
+  puppeteer: puppeteerConfig,
 });
 const config = {
   name: "jomokStickerBot",

@@ -7,6 +7,10 @@ yarn-error.log*
 lerna-debug.log*
 node_modules/
 package-lock.json
+
+# Windows executables (not needed for Ubuntu)
+ffmpeg.exe
+
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
