@@ -2,7 +2,6 @@ const { Client, LocalAuth, MessageMedia } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
 const moment = require("moment-timezone");
 const colors = require("colors");
-const ytdl = require("ytdl-core");
 
 const client = new Client({
   restartOnAuthFail: true,
@@ -44,15 +43,14 @@ client.on("ready", async () => {
   console.log(
     `[${moment().tz(config.timezone).format("HH:mm:ss")}] ${
       config.name
-    } is Already! `.green
+    } is Ready! `.green
   );
 });
 
 client.on("message", async (message) => {
-  const isGroups = message.from.endsWith("@g. us") ? true : false;
+  const isGroups = message.from.endsWith("@g.us") ? true : false;
   if ((isGroups && config.groups) || !isGroups) {
     const isStickerCommand = message.body.startsWith(`${config.prefix}sticker`);
-    const isYoutubeCommand = message.body.startsWith(`${config.prefix}youtube`);
 
     const hasMedia = message.hasMedia;
     const hasCaptionStickerCommand =
