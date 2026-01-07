@@ -5,8 +5,12 @@ const colors = require("colors");
 
 const client = new Client({
   restartOnAuthFail: true,
-  ffmpeg: "./ffmpeg.exe",
+  ffmpeg: "/usr/bin/ffmpeg",
   authStrategy: new LocalAuth({ clientId: "client" }),
+  puppeteer: {
+    executablePath: "/usr/bin/chromium-browser",
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  },
 });
 const config = {
   name: "jomokStickerBot",

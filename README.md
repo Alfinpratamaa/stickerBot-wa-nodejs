@@ -9,7 +9,29 @@ Jomok Sticker Bot is a WhatsApp bot that allows users to create stickers from im
 - User-friendly sticker creation without user intervention.
   
 ## Prerequisites
-Make sure you have Node.js installed before proceeding. You can download and install Node.js from the official website: [Node.js Official Website](https://nodejs.org/)
+Make sure you have the following installed before proceeding:
+
+1. **Node.js** - Download and install from: [Node.js Official Website](https://nodejs.org/)
+
+2. **FFmpeg** - Required for processing media files:
+   ```bash
+   sudo apt update
+   sudo apt install ffmpeg
+   ```
+
+3. **Chromium Browser** - Required for WhatsApp Web automation:
+   ```bash
+   sudo apt update
+   sudo apt install chromium-browser
+   ```
+   
+   Alternatively, you can install Google Chrome:
+   ```bash
+   wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+   sudo apt install ./google-chrome-stable_current_amd64.deb
+   ```
+   
+   If using Google Chrome, update the `executablePath` in `index.js` to `/usr/bin/google-chrome-stable`
 
 ## Installation
 
@@ -18,11 +40,11 @@ Make sure you have Node.js installed before proceeding. You can download and ins
    git clone https://github.com/Alfinpratamaa/stickerBot-wa-nodejs.git
    cd stickerBot-wa-nodejs
    ```
-2. install dependencies 
+2. Install dependencies (skip Puppeteer's Chromium download since we're using system Chromium):
    ```bash
-    npm i
+   PUPPETEER_SKIP_DOWNLOAD=true npm i
    ```
-3. run the apps
+3. Run the app:
    ```bash
    npm start
    ```
