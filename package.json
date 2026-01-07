@@ -1,25 +1,24 @@
 {
-  "name": "jomok-sticker-bot",
-  "version": "2.0.0",
+  "name": "Jomok Sticker Bot",
+  "version": "2.0",
   "description": "StickerBOT by alfin",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node .",
+    "install": "npm install"
   },
   "keywords": [
     "nodejs",
     "whatsapp-web.js",
-    "stickerbot"
+    "stickerbot",
+    "alfin"
   ],
   "author": "alfin",
   "dependencies": {
     "colors": "^1.4.0",
+    "ffmpeg": "^0.0.4",
     "moment-timezone": "^0.5.37",
-    "puppeteer": "^22.0.0",
     "qrcode-terminal": "^0.12.0",
     "whatsapp-web.js": "^1.23.0"
-  },
-  "engines": {
-    "node": "18.x"
   }
 }
