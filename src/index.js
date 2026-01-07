@@ -33,9 +33,7 @@ const config = {
 
 client.on("qr", (qr) => {
   console.log(
-    `[${moment()
-      .tz(config.timezone)
-      .format("HH:mm: ss")}] Scan the QR below :  `
+    `[${moment().tz(config.timezone).format("HH:mm:ss")}] Scan the QR below :  `
   );
   qrcode.generate(qr, { small: true });
 });

@@ -9,7 +9,7 @@
   },
   "keywords": [
     "nodejs",
-    "whatsapp-web. js",
+    "whatsapp-web.js",
     "stickerbot",
     "alfin"
   ],
@@ -20,7 +20,7 @@
     "moment-timezone": "^0.5.37",
     "puppeteer": "^21.7.0",
     "qrcode-terminal": "^0.12.0",
-    "whatsapp-web. js": "^1.23.0",
+    "whatsapp-web.js": "^1.23.0",
     "ytdl-core": "^4.11.5"
   },
   "engines": {
