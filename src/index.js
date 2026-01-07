@@ -2,7 +2,7 @@ const { Client, LocalAuth, MessageMedia } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
 const moment = require("moment-timezone");
 const colors = require("colors");
-const ytdl = require("ytdl-core"); // Add this line to import the ytdl-core package
+const ytdl = require("ytdl-core");
 
 const client = new Client({
   restartOnAuthFail: true,
@@ -12,11 +12,17 @@ const client = new Client({
       "--no-sandbox",
       "--disable-setuid-sandbox",
       "--unhandled-rejections=strict",
+      "--disable-dev-shm-usage",
+      "--disable-accelerated-2d-canvas",
+      "--no-first-run",
+      "--no-zygote",
+      "--disable-gpu",
     ],
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
   },
-  ffmpeg: "../ffmpeg.exe",
   authStrategy: new LocalAuth({ clientId: "client" }),
 });
+
 const config = {
   name: "jomokStickerBot",
   author: "alfin",
@@ -27,7 +33,9 @@ const config = {
 
 client.on("qr", (qr) => {
   console.log(
-    `[${moment().tz(config.timezone).format("HH:mm:ss")}] Scan the QR below : `
+    `[${moment()
+      .tz(config.timezone)
+      .format("HH:mm: ss")}] Scan the QR below :  `
   );
   qrcode.generate(qr, { small: true });
 });
@@ -38,12 +46,12 @@ client.on("ready", async () => {
   console.log(
     `[${moment().tz(config.timezone).format("HH:mm:ss")}] ${
       config.name
-    } is Already!`.green
+    } is Already! `.green
   );
 });
 
 client.on("message", async (message) => {
-  const isGroups = message.from.endsWith("@g.us") ? true : false;
+  const isGroups = message.from.endsWith("@g. us") ? true : false;
   if ((isGroups && config.groups) || !isGroups) {
     const isStickerCommand = message.body.startsWith(`${config.prefix}sticker`);
     const isYoutubeCommand = message.body.startsWith(`${config.prefix}youtube`);
