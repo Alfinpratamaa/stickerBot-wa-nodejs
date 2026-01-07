@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y ffmpeg
 WORKDIR /app
 
 # Copy package files
-COPY package*. json ./
+COPY package*.json ./
 
 # Install dependencies
 RUN npm install --production
