@@ -24,17 +24,39 @@ const findChromiumExecutable = () => {
   return undefined;
 };
 
+// Find available FFmpeg executable
+const findFfmpegExecutable = () => {
+  const possiblePaths = [
+    "/usr/bin/ffmpeg",
+    "/usr/local/bin/ffmpeg",
+  ];
+
+  for (const path of possiblePaths) {
+    if (fs.existsSync(path)) {
+      return path;
+    }
+  }
+
+  // Default to system PATH
+  return "ffmpeg";
+};
+
 const chromiumPath = findChromiumExecutable();
+const ffmpegPath = findFfmpegExecutable();
+
+// Puppeteer args for headless operation on Ubuntu
+const puppeteerArgs = ["--no-sandbox", "--disable-setuid-sandbox"];
+
 const puppeteerConfig = chromiumPath
   ? {
       executablePath: chromiumPath,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      args: puppeteerArgs,
     }
-  : { args: ["--no-sandbox", "--disable-setuid-sandbox"] };
+  : { args: puppeteerArgs };
 
 const client = new Client({
   restartOnAuthFail: true,
-  ffmpeg: "/usr/bin/ffmpeg",
+  ffmpeg: ffmpegPath,
   authStrategy: new LocalAuth({ clientId: "client" }),
   puppeteer: puppeteerConfig,
 });
